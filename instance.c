@@ -1,51 +1,51 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include <string.h>
 #include "instance.h"
+
+#define TAM_MAX 100000
+
 int countcomma(char s[]) {
     int count = 0, i;
     for (i=0;s[i]!='\0';i++) if (s[i] == ',') count++;
     return count;  
 }
 
-int next_comma(char s[], int f_pos) {
-    int i = 0;
-    for (i=f_pos ; s[i]!='\0' ; i++) {
-        if (s[i] == ',') 
-            return ++i;
-    }
-    return -1;
-}
-
 void leitura(timetabling *a) {
-    char auxiliar[1000], *aux;
+    char auxiliar[TAM_MAX], *aux_tok;
     int i, j;
-    scanf("[Exams:%d]\n", &a->num_ex);
+    fgets(auxiliar, TAM_MAX, stdin);
+    // Leitura de exames
+    sscanf(auxiliar, "[Exams:%d]\n", &a->num_ex);
     a->ex = malloc(a->num_ex * sizeof(exam));
-    /*  Leitura de exames  */
-    for(i=0; i < a->num_ex ; i++) {
-        int ini,j;
-        fgets(auxiliar,1000,stdin);
-        a->ex[i].dur = atoi(auxiliar);
+    for (i = 0; i < a->num_ex; i++) {
+        fgets(auxiliar, TAM_MAX, stdin);
         a->ex[i].num = countcomma(auxiliar);
         a->ex[i].student = malloc(a->ex[i].num * sizeof(int));
-        ini = next_comma(auxiliar,0);
-        j = 0;
-        while(ini != -1) {
-            a->ex[i].student[j] = atoi(auxiliar + ini);
-            j++;
-            ini = next_comma(auxiliar,ini);
+        aux_tok = strtok(auxiliar, ",");
+        a->ex[i].dur = atoi(aux_tok);
+        j=0;
+        aux_tok = strtok(NULL, ",");
+        while(aux_tok != NULL) {
+            a->ex[i].student[j++] = atoi(aux_tok);
+            aux_tok = strtok(NULL, ",");
         }
     }
-/*  Leitura de Periodos  */
-    scanf("[Periods:%d]\n", &a->num_per);
+    /*  Leitura de Periodos  */
+    fgets(auxiliar, TAM_MAX, stdin);
+    sscanf(auxiliar, "[Periods:%d]", &a->num_per);
     a->per = malloc(a->num_per * sizeof(period));
-    for(i=0; i< a->num_per; i++) 
-        scanf("%d:%d:%d, %d:%d:%d, %d, %d", &a->per[i].day, &a->per[i].month, &a->per[i].year, &a->per[i].hour, &a->per[i].min, &a->per[i].sec, &a->per[i].duration, &a->per[i].penalty);
-    /*  Leitura de salas  */ 
-    scanf("[Rooms:%d]\n", &a->num_room);
+    for(i=0; i< a->num_per; i++) {
+        fgets(auxiliar, TAM_MAX, stdin);
+        sscanf(auxiliar, "%d:%d:%d, %d:%d:%d, %d, %d", &a->per[i].day, &a->per[i].month, &a->per[i].year, &a->per[i].hour, &a->per[i].min, &a->per[i].sec, &a->per[i].duration, &a->per[i].penalty);
+    }
+    /*  Leitura de salas  */
+    fgets(auxiliar, TAM_MAX, stdin);
+    sscanf(auxiliar,"[Rooms:%d]\n", &a->num_room);
     a->r = malloc(a->num_room * sizeof(room));
     for (i=0; i<a->num_room; i++) 
-        scanf("%d, %d", &a->r[i].penalty, &a->r[i].capacity);
-
+        scanf("%d, %d\n", &a->r[i].penalty, &a->r[i].capacity);
+    fgets(auxiliar, TAM_MAX, stdin);
+    puts(auxiliar);
 }
    
