@@ -36,7 +36,7 @@ void TFila_Period_Imprimi(TFila_Period *TFila) {
 
 Par_Ordenado TFila_Period_remove(TFila_Period *TFila) {
     Par_Ordenado saida;
-    if (!TFila_Period_vazio(TFila)) {
+    if (TFila_Period_vazio(TFila) == 0) {
         saida.a = saida.b =-1;
         return saida;
     }

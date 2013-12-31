@@ -16,13 +16,13 @@ void leitura(timetabling *a) {
     int i, j;
     fgets(auxiliar, TAM_MAX, stdin);
     // Leitura de exames
-    sscanf(auxiliar, "[Exams:%d]\n", &a->num_ex);
-    a->ex = malloc(a->num_ex * sizeof(exam));
+    sscanf(auxiliar, "[Exams:%d]\n", &a->num_ex);     
+    a->ex = malloc(a->num_ex * sizeof(exam));         //alocacao dinamica
     for (i = 0; i < a->num_ex; i++) {
         fgets(auxiliar, TAM_MAX, stdin);
-        a->ex[i].num = countcomma(auxiliar);
-        a->ex[i].student = malloc(a->ex[i].num * sizeof(int));
-        aux_tok = strtok(auxiliar, ",");
+        a->ex[i].num = countcomma(auxiliar);          //numero de exames eh dado pelo numero de virgulas 
+        a->ex[i].student = malloc(a->ex[i].num * sizeof(int));   //aloca vetor de estudantes fazendo exame
+        aux_tok = strtok(auxiliar, ",");              //divide o auxiliar
         a->ex[i].dur = atoi(aux_tok);
         j=0;
         aux_tok = strtok(NULL, ",");
@@ -45,7 +45,45 @@ void leitura(timetabling *a) {
     a->r = malloc(a->num_room * sizeof(room));
     for (i=0; i<a->num_room; i++) 
         scanf("%d, %d\n", &a->r[i].penalty, &a->r[i].capacity);
-    fgets(auxiliar, TAM_MAX, stdin);
-    puts(auxiliar);
+    /* Leitura de Period Hard Constraints */
+    fgets(auxiliar,TAM_MAX, stdin);  //leitura auxiliar
+    TFila_Period_cria(&a->period_exclusion);   //cria as filas
+    TFila_Period_cria(&a->period_coincidence);
+    TFila_Period_cria(&a->period_after);
+    while (1) {
+        fgets(auxiliar,TAM_MAX, stdin);  //leitura auxiliar
+        if (strcmp(auxiliar, "[RoomHardConstraints]\n") == 0) break;
+        int par1, par2, men = 0;                             //variaveis para guardar os
+        par1 = atoi(auxiliar);
+        aux_tok = strtok(auxiliar, ",");           //separacao da primeira virgula
+        aux_tok = strtok(NULL, ", ");
+        if (strcmp(aux_tok, "EXAM_COINCIDENCE") == 0) 
+            men = 1;                                  //se exam coincidence, men = 1
+        
+        else if (strcmp(aux_tok, "EXCLUSION") == 0) 
+            men = 2;                                  //se exclusion, men = 2
+        else if (strcmp(aux_tok, "AFTER") == 0) 
+            men = 3;                                  //se after, men = 3;
+        aux_tok = strtok(NULL, ", ");              //separacao da segunda virgula
+        par2 = atoi(aux_tok);
+        switch (men) {
+            case 1:
+                TFila_Period_insere (&a->period_coincidence, par1, par2);
+                break;
+            case 2:
+                TFila_Period_insere(&a->period_exclusion, par1, par2);
+                break;
+            case 3:
+                TFila_Period_insere(&a->period_after,par1,par2);
+                break;
+        }
+        printf("Period Coincidence: \n");
+        TFila_Period_Imprimi(&a->period_coincidence);
+        printf("Period After: \n");
+        TFila_Period_Imprimi(&a->period_after);
+        printf("Period Exclusion: \n");
+        TFila_Period_Imprimi( &a->period_exclusion);
+//        printf("MEN: %d\nA:%d\t\tB:%d\n", men, par1, par2);
+    }
 }
    

@@ -1,3 +1,4 @@
+#include "fila.h"
 typedef struct {
     int dur,
         num,
@@ -29,7 +30,14 @@ typedef struct {
     int num_ex,     //numero de exames
         num_per,    //numero de periodos
         num_room;   //numero de salas
+//Conjunto de restricoes de periodo
+    TFila_Period period_exclusion,  //conjunto de exames q n podem ser alocados no mesmo periodo 
+                 period_after,      //conjunto d exames q devem ser alocados em sequencia
+                 period_coincidence;  //conjunto de exames q devem ser alocados no mesmo periodo
 } timetabling;
+
+
+
 
 int countcomma(char s[]); 
 int next_comma(char s[], int f_pos) ;
