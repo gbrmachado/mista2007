@@ -19,6 +19,7 @@ void leitura(timetabling *a) {
     sscanf(auxiliar, "[Exams:%d]\n", &a->num_ex);     
     a->ex = malloc(a->num_ex * sizeof(exam));         //alocacao dinamica
     for (i = 0; i < a->num_ex; i++) {
+        a->ex[i].exclusive = 0;                       //padrao, sem exclusividade
         fgets(auxiliar, TAM_MAX, stdin);
         a->ex[i].num = countcomma(auxiliar);          //numero de exames eh dado pelo numero de virgulas 
         a->ex[i].student = malloc(a->ex[i].num * sizeof(int));   //aloca vetor de estudantes fazendo exame
@@ -45,6 +46,7 @@ void leitura(timetabling *a) {
     a->r = malloc(a->num_room * sizeof(room));
     for (i=0; i<a->num_room; i++) 
         scanf("%d, %d\n", &a->r[i].penalty, &a->r[i].capacity);
+
     /* Leitura de Period Hard Constraints */
     fgets(auxiliar,TAM_MAX, stdin);  //leitura auxiliar
     TFila_Period_cria(&a->period_exclusion);   //cria as filas
@@ -77,13 +79,45 @@ void leitura(timetabling *a) {
                 TFila_Period_insere(&a->period_after,par1,par2);
                 break;
         }
-        printf("Period Coincidence: \n");
-        TFila_Period_Imprimi(&a->period_coincidence);
-        printf("Period After: \n");
-        TFila_Period_Imprimi(&a->period_after);
-        printf("Period Exclusion: \n");
-        TFila_Period_Imprimi( &a->period_exclusion);
-//        printf("MEN: %d\nA:%d\t\tB:%d\n", men, par1, par2);
+
     }
+    /* Leitura de Room Related Hard Constraints */
+    while(1) {
+        fgets(auxiliar,TAM_MAX, stdin);
+        if (strcmp(auxiliar, "[InstitutionalWeightings]\n") == 0) break;
+        int aux_room = atoi(auxiliar);
+        a->ex[aux_room].exclusive = 1;
+    }
+    
+    /* Leitura de Institutional Weights and Parameters */
+    while( fgets(auxiliar,TAM_MAX,stdin) != NULL ) {
+        aux_tok = strtok(auxiliar, ",");
+        if (strcmp(aux_tok, "TWOINAROW") == 0) {
+            aux_tok = strtok(NULL, ",");
+            a->twoinarow = atoi(aux_tok);
+        }
+        else if (strcmp(aux_tok, "TWOINADAY") == 0) {
+            aux_tok = strtok(NULL, ",");
+            a->twoinaday = atoi(aux_tok);
+        }
+        else if (strcmp(aux_tok, "PERIODSPREAD") == 0) {
+            aux_tok = strtok(NULL, ",");
+            a->periodspread = atoi(aux_tok);
+        }
+        else if(strcmp(aux_tok, "NONMIXEDDURATIONS") == 0) {
+            aux_tok = strtok(NULL, ",");
+            a->nonmixed = atoi(aux_tok);
+        }
+        else if(strcmp(aux_tok, "FRONTLOAD") == 0) {
+            int kaux = 0;
+            aux_tok = strtok(NULL, ",");
+            a->frontload[kaux++] = atoi(aux_tok);
+            aux_tok = strtok(NULL, ",");
+            a->frontload[kaux++] = atoi(aux_tok);
+            aux_tok = strtok(NULL, ",");
+            a->frontload[kaux++] = atoi(aux_tok);
+        }    
+    }
+
 }
    

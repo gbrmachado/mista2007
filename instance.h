@@ -2,7 +2,8 @@
 typedef struct {
     int dur,
         num,
-        *student;
+        *student,
+        exclusive;   //1 se exclusivo, 0 se nao   
 } exam;
 
 typedef struct {
@@ -19,7 +20,7 @@ typedef struct {
 typedef struct {
     int capacity,
         penalty,
-        peso;       //
+        peso;
 
 } room;
 
@@ -34,6 +35,13 @@ typedef struct {
     TFila_Period period_exclusion,  //conjunto de exames q n podem ser alocados no mesmo periodo 
                  period_after,      //conjunto d exames q devem ser alocados em sequencia
                  period_coincidence;  //conjunto de exames q devem ser alocados no mesmo periodo
+//Conjunto de Institucional Constraints
+
+    int twoinarow,     //Dois exames em seguda
+        twoinaday,     //Dois exames em um dia
+        periodspread,  //
+        nonmixed,      //Salas e periodos com com duracoes mistas
+        frontload[3];  //exames mais tarde
 } timetabling;
 
 
