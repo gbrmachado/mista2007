@@ -1,0 +1,9 @@
+2014-01-09
+* (fila.h, fila.c)
+    Adicionada Fila para armazenar estudantes em comum(adicionada também toda TAD)
+    TODO: TESTAR em um branch
+
+* (solution.h, solution.c)
+    Adicionada estrutura para verificar se periodo esta alocado ou nao 
+    Modificação da estrutura solution, nsc passou a ser uma matriz de estrutura student_common(ao invés de int)
+

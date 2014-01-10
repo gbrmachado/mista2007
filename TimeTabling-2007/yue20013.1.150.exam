@@ -36,6 +36,9 @@
 150, 0
 0, 1000
 [PeriodHardConstraints]
+0, EXAM_COINCIDENCE, 1
+0, EXCLUSION, 2
+0, AFTER, 3
 [RoomHardConstraints]
 [InstitutionalWeightings]
 TWOINAROW, 1
