@@ -7,7 +7,8 @@ int main() {
     solution sol;
     int i,j;
     leitura(&a);
-    gera_sol(a, &sol);
-//    imprimi(sol);
+    cria_solution(a, &sol);
+    imprimi(sol);
+    gera_sol(a,&sol);
     return 0;
 }

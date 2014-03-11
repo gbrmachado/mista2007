@@ -1,47 +1,49 @@
 /*-----------------------------------------------*
  * Estrutura para fila de Restricoes do periodo  *
  * ----------------------------------------------*/
-typedef struct _Par_Ordenado {
-    int a, b;
-} Par_Ordenado;
+typedef struct {
+    int a,
+        b;
+} TDupla;
 
-typedef struct TCelula_Period{
-    struct TCelula_Period *pProx;
-    Par_Ordenado par;
-} TCelula_Period_Hard;
+typedef struct _TCelula_Dupla{
+    struct _TCelula_Dupla *pProx;
+    TDupla par;
+} TCelula_Dupla;
 
-typedef struct _TFila_Period {
-    TCelula_Period_Hard *pPrimeiro, *pUltimo;
-    int n_restricoes;
-} TFila_Period;
+typedef struct _TFila_Dupla {
+    TCelula_Dupla *pPrimeiro, *pUltimo;
+    int n;     //Numero de elementos
+} TFila_Dupla;
 
-void TFila_Period_cria(TFila_Period *);
-void TFila_Period_insere(TFila_Period *, int, int);
-Par_Ordenado TFila_Period_remove(TFila_Period *);
-int TFila_Period_vazio(TFila_Period *);
-void TFila_Period_Imprimi(TFila_Period *);
+void TFila_Dupla_cria(TFila_Dupla *);
+void TFila_Dupla_insere(TFila_Dupla *, int, int);
+TDupla TFila_Dupla_remove(TFila_Dupla *);
+int TFila_Dupla_vazio(TFila_Dupla *);
+void TFila_Dupla_Imprimi(TFila_Dupla *);
 
 /*************************************************
  * Estrutura para fila de periodos em comum      *
  * **********************************************/
-typedef struct _Period_comum {
-    int p_a,    //periodo A (numero do periodo)
-        p_b,    //periodo B
-        n_p;    //Numero de estudantes em comum entre os periodos A e B
-} Period_common;
+typedef struct {
+    int a,    //periodo A (numero do periodo)
+        b,    //periodo B
+        c;    //Numero de estudantes em comum entre os periodos A e B
+} TTripla;
 
-typedef struct _TCelula_Period_common {
-    struct _TCelula_Period_common *pProx;
-    Period_common period;
-} TCelula_Period_common;
+typedef struct _TCelula_Tripla {
+    struct _TCelula_Tripla *pProx;
+    TTripla tripla;
+} TCelula_Tripla;
 
-typedef struct _TFila_StudentCommon {
-    TCelula_Period_common *pPrimeiro, *pUltimo;
-    int n_periods;
-} TFila_StudentCommon;
+typedef struct {
+    TCelula_Tripla *pPrimeiro, *pUltimo;
+    int n;
+} TFila_Tripla;
 
-void TFila_StudentCommon_cria(TFila_StudentCommon *);
-void TFila_StudentCommon_insere(TFila_StudentCommon *, int, int, int);
-Period_common TFila_StudentCommon_remove(TFila_StudentCommon *);
-int TFila_StudentCommon_vazio(TFila_StudentCommon *);
-void TFila_StudentCommon_Imprimi(TFila_StudentCommon *);
+void TFila_Tripla_cria(TFila_Tripla *);
+void TFila_Tripla_insere(TFila_Tripla *, int, int, int);
+TTripla  TFila_Tripla_remove(TFila_Tripla *);
+int TFila_Tripla_vazio(TFila_Tripla *);
+void TFila_Tripla_Imprimi(TFila_Tripla *);
+void TFila_Tripla_ordena(TFila_Tripla *);

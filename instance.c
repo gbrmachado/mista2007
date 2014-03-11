@@ -49,9 +49,9 @@ void leitura(timetabling *a) {
 
     /* Leitura de Period Hard Constraints */
     fgets(auxiliar,TAM_MAX, stdin);  //leitura auxiliar
-    TFila_Period_cria(&a->period_exclusion);   //cria as filas
-    TFila_Period_cria(&a->period_coincidence);
-    TFila_Period_cria(&a->period_after);
+    TFila_Dupla_cria(&a->period_exclusion);   //cria as filas
+    TFila_Dupla_cria(&a->period_coincidence);
+    TFila_Dupla_cria(&a->period_after);
     while (1) {
         fgets(auxiliar,TAM_MAX, stdin);  //leitura auxiliar
         if (strcmp(auxiliar, "[RoomHardConstraints]\n") == 0) break;
@@ -61,7 +61,6 @@ void leitura(timetabling *a) {
         aux_tok = strtok(NULL, ", ");
         if (strcmp(aux_tok, "EXAM_COINCIDENCE") == 0) 
             men = 1;                                  //se exam coincidence, men = 1
-        
         else if (strcmp(aux_tok, "EXCLUSION") == 0) 
             men = 2;                                  //se exclusion, men = 2
         else if (strcmp(aux_tok, "AFTER") == 0) 
@@ -70,13 +69,13 @@ void leitura(timetabling *a) {
         par2 = atoi(aux_tok);
         switch (men) {
             case 1:
-                TFila_Period_insere (&a->period_coincidence, par1, par2);
+                TFila_Dupla_insere (&a->period_coincidence, par1, par2);
                 break;
             case 2:
-                TFila_Period_insere(&a->period_exclusion, par1, par2);
+                TFila_Dupla_insere(&a->period_exclusion, par1, par2);
                 break;
             case 3:
-                TFila_Period_insere(&a->period_after,par1,par2);
+                TFila_Dupla_insere(&a->period_after,par1,par2);
                 break;
         }
 

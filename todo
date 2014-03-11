@@ -7,3 +7,19 @@
     Adicionada estrutura para verificar se periodo esta alocado ou nao 
     Modificação da estrutura solution, nsc passou a ser uma matriz de estrutura student_common(ao invés de int)
 
+2014-03-07
+* (fila.h, fila.c)
+    Modificado nome das estruturas de filas:
+    TDupla : guarda um par ordenado de inteiros
+    TTripla: guarda uma tripla de inteiros
+    Criado Fila de exames
+
+2014-03-11
+* (fila_exam.h, fila_exam.c)
+    Adicionada fila de exames a serem alocados
+* (solution.h, solution.c)
+    Modificada estrutura de fila para alocar(agora é fila de exames)
+    Reorganização geral do arquivo solution.c. Agora a função cria_solution inicializa todos os dados necessários
+    Criada estrutura inicial de alocação(gera_sol)
+
+

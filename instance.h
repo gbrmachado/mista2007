@@ -1,3 +1,5 @@
+#ifndef INSTANCE_H
+#define INSTANCE_H
 #include "fila.h"
 typedef struct {
     int dur,
@@ -32,7 +34,7 @@ typedef struct {
         num_per,    //numero de periodos
         num_room;   //numero de salas
 //Conjunto de restricoes de periodo
-    TFila_Period period_exclusion,  //conjunto de exames q n podem ser alocados no mesmo periodo 
+    TFila_Dupla period_exclusion,  //conjunto de exames q n podem ser alocados no mesmo periodo 
                  period_after,      //conjunto d exames q devem ser alocados em sequencia
                  period_coincidence;  //conjunto de exames q devem ser alocados no mesmo periodo
 //Conjunto de Institucional Constraints
@@ -40,7 +42,7 @@ typedef struct {
     int twoinarow,     //Dois exames em seguda
         twoinaday,     //Dois exames em um dia
         periodspread,  //
-        nonmixed,      //Salas e periodos com com duracoes mistas
+        nonmixed,      //Salas e periodos com duracoes mistas
         frontload[3];  //exames mais tarde
 } timetabling;
 
@@ -50,3 +52,5 @@ typedef struct {
 int countcomma(char s[]); 
 int next_comma(char s[], int f_pos) ;
 void leitura(timetabling *);
+
+#endif
